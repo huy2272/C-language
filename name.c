@@ -5,6 +5,11 @@
 #endif
 int main(){
     printf("Hello my name is Huy, and I am %d\n", YEARS_OLD);
-    //Comments
+    char str[100];
+    int i;
+    //Reading input
+    printf("Enter your name and age:\n");
+    scanf("%s%d",str,&i);
+    printf("You have entered: My name is %s and I am %d", str, i);
     return 0;
 }
