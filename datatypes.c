@@ -63,5 +63,7 @@ int main(){
     printf("New line %c", escape);
     printf("Last line");
 
-
+    float x = 3.99999999999;
+    //Width specifier %.2f prints to 2 decimal place
+    printf("%.2f", x);
 }
