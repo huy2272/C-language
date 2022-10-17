@@ -7,6 +7,7 @@ int main(){
     printf("Hello my name is Huy, and I am %d\n", YEARS_OLD);
     char str[100];
     int i;
+    double dbl; //Double the precision compared to float use %lf for scanf to read a double from user input
     //Reading input
     printf("Enter your name and age:\n");
     scanf("%s%d",str,&i);
