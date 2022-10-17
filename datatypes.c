@@ -49,7 +49,7 @@ int main(){
     if (south == 10)
     {
         //This will print since we assign a specific value to south
-        printf("Enum");
+        printf("Enum\n");
     }
     
     char celsius;
@@ -59,6 +59,9 @@ int main(){
 
     //We can assign escape characters to char as well
     char escape = '\n';
+    //Printing a character
+    printf("New line %c", escape);
+    printf("Last line");
 
 
 }
