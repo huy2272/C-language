@@ -11,4 +11,7 @@ int main(int argc, char* argv[]){
     //By doing ./a.out abcd 2> err.txt
     //2 stands for stderr, which will be push into an err.txt file
     //To view the text file we use cat err.txt
+
+    //stderr (fprintf) stream is not buffered but it will be slower 
+    //While stdout (printf) and stdin is buffered but it will be faster
 }
