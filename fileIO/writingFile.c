@@ -3,8 +3,8 @@
 
 int main(){
     int num;
-    FILE *fptr;
-    fptr = fopen ("C:\\program.txt", "w");
+    FILE *fptr = NULL;
+    fptr = fopen ("program.txt", "w");
     if(fptr == NULL){
         printf("Error!");
         exit(1);
