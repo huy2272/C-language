@@ -1,1 +1,2 @@
-Hello my number is 514
+This is a string
+New string

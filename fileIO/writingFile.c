@@ -13,18 +13,20 @@ int main(){
     // fp = NULL;
 
     //Writing a string to a txt file
-    // fp = fopen("program.txt", "w+");
-    // fputs("This is a string", fp);
-    // fputs("New string", fp);
-    // fclose(fp);
-    // fp = NULL;
-    
-    //Writing formatted output to a txt file
+    //Make sure to add \n at the end of each string
+    //Otherwise we will run into problem when reading the file again
     fp = fopen("program.txt", "w+");
-    fprintf(fp, "%s %s %s %s %d", "Hello", "my", "number", "is", 514);
-
+    fputs("This is a string\n", fp);
+    fputs("New string\n", fp);
     fclose(fp);
     fp = NULL;
+    
+    //Writing formatted output to a txt file
+    // fp = fopen("program.txt", "w+");
+    // fprintf(fp, "%s %s %s %s %d", "Hello", "my", "number", "is", 514);
+
+    // fclose(fp);
+    // fp = NULL;
 
     // int num;
     // FILE *fptr = NULL;
