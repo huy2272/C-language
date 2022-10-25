@@ -2,17 +2,41 @@
 #include <stdlib.h>
 
 int main(){
-    int num;
-    FILE *fptr = NULL;
-    fptr = fopen ("program.txt", "w");
-    if(fptr == NULL){
-        printf("Error!");
-        exit(1);
-    }
+    //Writing a character into a txt file
+    FILE *fp = NULL;
+    // fp = fopen("program.txt", "w+");
+    // for (int ch = 33; ch < 100; ch++)
+    // {
+    //     fputc(ch, fp);
+    // }
+    // fclose(fp);
+    // fp = NULL;
 
-    printf("Enter num:");
-    scanf("%d", &num);
-    fprintf(fptr,"%d", num);
-    fclose(fptr);
+    //Writing a string to a txt file
+    // fp = fopen("program.txt", "w+");
+    // fputs("This is a string", fp);
+    // fputs("New string", fp);
+    // fclose(fp);
+    // fp = NULL;
+    
+    //Writing formatted output to a txt file
+    fp = fopen("program.txt", "w+");
+    fprintf(fp, "%s %s %s %s %d", "Hello", "my", "number", "is", 514);
+
+    fclose(fp);
+    fp = NULL;
+
+    // int num;
+    // FILE *fptr = NULL;
+    // fptr = fopen ("program.txt", "w");
+    // if(fptr == NULL){
+    //     printf("Error!");
+    //     exit(1);
+    // }
+
+    // printf("Enter num:");
+    // scanf("%d", &num);
+    // fprintf(fptr,"%d", num);
+    // fclose(fptr);
     return 0;
 }
