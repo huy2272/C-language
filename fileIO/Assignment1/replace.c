@@ -1,23 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "methods.h"
 
-int main(int argc, char const *argv[])
+int main(int argc, char *argv[])
 {
-    if (argc != 2)
-    {
-        printf("Please make sure to enter one string\n");
-        return 0;
-    }
-    
-    int strSize = 0;
-    char *strUser;
-
-    //Find out the length of user's input string
-    strSize += strlen(argv[1]);
-    //Allocate memory for user's input string
-    strUser = malloc(strSize);
-    strcat(strUser, argv[1]);
-    printf("cmmd string is: %s\n", strUser); 
+    int result;
+    // if (argc != 2)
+    // {
+    //     printf("Please make sure to enter one string\n");
+    //     return 0;
+    // }
+    system("clear");
+    CurrFile(argv[1]);
+    result = Srch(argv[1], argv[2]);
     return 0;
 }
