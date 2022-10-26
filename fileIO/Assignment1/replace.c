@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     //     return 0;
     // }
     system("clear");
-    CurrFile(argv[1]);
+    //Traverse(argv[1]);
     result = Srch(argv[1], argv[2]);
     return 0;
 }
