@@ -1,48 +1,57 @@
-#include <stdio.h>
-#include <string.h>
-
-int main(int argc, char *argv[]) {
-    char buffer[4096];
-    size_t len1, len2, pos, nread;
-    const char *str1, *str2;
-
-    if (argc < 2) {
-        fprintf(stderr, "usage: %s STRING [REPLACEMENT]\n", argv[0]);
-        return 1;
-    }
-
-    str1 = argv[1];  // string to search and replace
-    len1 = strlen(str1);
-    str2 = "";       // default replacement is empty
-    len2 = 0;
-    if (len1 >= sizeof(buffer)) {
-        fprintf(stderr, "%s: STRING too long\n", argv[0]);
-        return 1;
-    }
-    if (len1 == 0) {      // special case empty string
-        len1 = len2 = 1;  // replace 0 byte with itself
-    } else
-    if (argc > 2) {
-        str2 = argv[2];
-        len2 = strlen(str2);
-    }
-
-    pos = 0;
-    while ((nread = fread(buffer + pos, 1, sizeof(buffer) - pos, stdin)) != 0) {
-        size_t start = 0, i = 0, end = pos + nread;
-        while (i + len1 <= end) {
-            if (buffer[i] == *str1 && !memcmp(buffer + i, str1, len1)) {
-                fwrite(buffer + start, 1, i - start, stdout);
-                fwrite(str2, 1, len2, stdout);
-                start = i += len1;
-            } else {
-                i++;
+    #include <stdio.h>
+    #include <string.h>
+    #define MAX_W 501
+    #define MAX_F 261
+    
+    void eat(void); //clears stdin
+    
+    int main(){
+        printf("\nKeep a backup of your file in case of undesirable effects.\n");
+        char frep[MAX_F]; printf("\n Filename : "); scanf("%260[^\n]",frep);eat(); // stores fname in frep[], clears stdin
+        FILE * rep = fopen(frep,"r");FILE * tmp = fopen("Temp.Ctt","w");// opens file for reading and tmp for writing
+        if(rep==NULL||tmp==NULL){
+            // if files could not be opened
+            perror("\nError ");
+        }
+        else{
+            char target[MAX_W]; printf("\n Target : "); scanf("%500s",target);eat(); // gets target word
+            char replace[MAX_W]; printf("\n Replacement : "); scanf("%500[^\n]",replace);eat();// gets its replacement
+            while(1){
+                int ch = fgetc(rep);
+                if(ch==EOF)
+                    break;
+                else if(ch==' '||ch=='\t'||ch=='\n'||ch == '\r')
+                    fputc(ch,tmp);// directly write whitespace chars
+                else{
+                    char buffer[MAX_W];
+                    fseek(rep,-1,SEEK_CUR);
+                    // move FILE pointer 1 byte back to read entire word, not from 2nd char onwards
+                    fscanf(rep,"%500s",buffer);
+                    if(strcmp(buffer,target)==0)
+                        strcpy(buffer,replace);
+                    fprintf(tmp,"%s",buffer);
+                }
+            }
+            fclose(rep); int chk =fclose(tmp);
+        if(chk==EOF){
+            remove("Temp.Ctt"); perror("\nFailed ");
+        }
+        else{
+            if(rename("Temp.Ctt",frep)==0)
+                printf("\nSucess.\n\nReplaced any instances of \"%s\" with \"%s\".\n",target,replace);
+            else{
+                remove(frep);
+                if(rename("Temp.Ctt",frep)==0)
+                    printf("\nSucess.\n\nReplaced any instances of \"%s\" with \"%s\".\n",target,replace);
+                else{
+                    remove("Temp.Ctt"); perror("\nFailed ");
+                }
             }
         }
-        fwrite(buffer + start, 1, i - start, stdout);
-        memmove(buffer, buffer + i, end - i);
-        pos = end - i;
     }
-    fwrite(buffer, 1, pos, stdout);
     return 0;
+}
+void eat()
+{
+    int eat;while ((eat = getchar()) != '\n' && eat != EOF);
 }
