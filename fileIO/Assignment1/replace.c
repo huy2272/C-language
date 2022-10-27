@@ -9,10 +9,12 @@ int main(int argc, char *argv[])
     // if (argc != 2)
     // {
     //     printf("Please make sure to enter one string\n");
-    //     return 0;
+    //     return 1;
     // }
     system("clear");
     //Traverse(argv[1]);
-    result = Srch(argv[1], argv[2]);
+    //result = Srch(argv[1], argv[2]);
+    Traverse();
+    SrchAndReplace(argc,argv);
     return 0;
 }
