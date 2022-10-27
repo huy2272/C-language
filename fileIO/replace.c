@@ -35,6 +35,7 @@ int main(int argc, char *argv[])
         //Stores the capitalized string into replace[]
         char replace[MAX_W];
         strcpy(replace, string);
+        free(string);
         while (1)
         {
             int ch = fgetc(rep);
