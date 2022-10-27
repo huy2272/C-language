@@ -1,5 +1,5 @@
-this is the first line
-this is the second line
-this is the third line
+THIS is the first LINE
+THIS is the second LINE
+THIS is the third LINE
 Waterloo seems like a good uni for software
 LIFE IN THE BIG APPLE IS FUN

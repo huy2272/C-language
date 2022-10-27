@@ -5,22 +5,30 @@
 
 void eat(void); // clears stdin
 
-int main(int argc, char *argv[])
+int main()
 {
+    printf("\nKeep a backup of your file in case of undesirable effects.\n");
     char frep[MAX_F];
-    strcpy(frep, argv[1]); // stores fname in frep[], clears stdin
+    printf("\n Filename : ");
+    scanf("%260[^\n]", frep);
+    eat(); // stores fname in frep[], clears stdin
     FILE *rep = fopen(frep, "r");
-    FILE *tmp = fopen("Temp.txt", "w"); // opens file for reading and tmp for writing
+    FILE *tmp = fopen("Temp.Ctt", "w"); // opens file for reading and tmp for writing
     if (rep == NULL || tmp == NULL)
     {
-        perror("\nError in opening files");
+        // if files could not be opened
+        perror("\nError ");
     }
     else
     {
         char target[MAX_W];
-        strcpy(target, argv[2]);
+        printf("\n Target : ");
+        scanf("%500s", target);
+        eat(); // gets target word
         char replace[MAX_W];
-        strcpy(replace, &toUpper(target));
+        printf("\n Replacement : ");
+        scanf("%500[^\n]", replace);
+        eat(); // gets its replacement
         while (1)
         {
             int ch = fgetc(rep);
@@ -43,25 +51,31 @@ int main(int argc, char *argv[])
         int chk = fclose(tmp);
         if (chk == EOF)
         {
-            remove("Temp.txt");
+            remove("Temp.Ctt");
             perror("\nFailed ");
         }
         else
         {
-            if (rename("Temp.txt", frep) == 0)
-                printf("\nSuccess.\n\nReplaced any instances of \"%s\" with \"%s\".\n", target, replace);
+            if (rename("Temp.Ctt", frep) == 0)
+                printf("\nSucess.\n\nReplaced any instances of \"%s\" with \"%s\".\n", target, replace);
             else
             {
                 remove(frep);
-                if (rename("Temp.txt", frep) == 0)
+                if (rename("Temp.Ctt", frep) == 0)
                     printf("\nSucess.\n\nReplaced any instances of \"%s\" with \"%s\".\n", target, replace);
                 else
                 {
-                    remove("Temp.txt");
+                    remove("Temp.Ctt");
                     perror("\nFailed ");
                 }
             }
         }
     }
     return 0;
+}
+void eat()
+{
+    int eat;
+    while ((eat = getchar()) != '\n' && eat != EOF)
+        ;
 }

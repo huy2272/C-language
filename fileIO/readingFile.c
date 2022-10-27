@@ -49,3 +49,11 @@ int main(){
 
     return 0;
 }
+
+//Function to to receive user inputs
+//Take into account the fact that users can accidentally hit enter without entering input first
+void eat()
+{
+    int eat;
+    while ((eat = getchar()) != '\n' && eat != EOF);
+}
