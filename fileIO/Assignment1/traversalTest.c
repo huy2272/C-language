@@ -55,7 +55,7 @@ int Traverse(char *argv)
     {
       printf("Filename: %s  path:%s\n", dir->d_name, currentPath);
       //Ensure that we are updating .txt files ONLY
-      if (has_txt != 0)
+      if (has_txt(dir->d_name))
         SrchAndReplace(dir->d_name, argv);
       
     }
@@ -93,7 +93,7 @@ void helper(DIR *dp, struct dirent *dir, struct stat buffer,
       for (i = 0; i < depth; i++)
         printf("    ");
       printf("Filename: %s  path:%s\n", dir->d_name, currentPath);
-      if (has_txt != 0)
+      if (has_txt(dir->d_name))
         SrchAndReplace(dir->d_name, argv);
     }
 
@@ -123,6 +123,6 @@ void dircheck(DIR *dp, struct dirent *dir, struct stat buffer,
 }
 
 bool has_txt(char const *fname){
-  size_t length = strlen(fname);
-  return length > 4 && strcmp(fname + length - 4, ".txt") == 0;
+  int length = strlen(fname);
+  return (length > 4) && (length > 4 && strcmp(fname + length - 4, ".txt") == 0);
 }
