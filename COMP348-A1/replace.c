@@ -12,5 +12,22 @@ int main(int argc, char const *argv[])
     }
     system("clear");
     Traverse(argv[1]);
+
+    //Read the report.ctt file
+    FILE *fp;
+    char str[61];
+    fp = fopen("report.ctt", "r");
+
+    if (fp == NULL)
+    {
+        perror("Error opening file");
+        return(-1);
+    }
+    
+    while (fgets(str,60,fp) != NULL)
+        printf("%s", str);
+
+    fclose(fp);
+    fp = NULL;
     return 0;
 }

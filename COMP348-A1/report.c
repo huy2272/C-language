@@ -13,6 +13,10 @@ int Report(int hits, char *fname, const char *str){
         if (access("report.ctt", F_OK) == 0){
             //The report file already exist
             fpf = fopen("report.ctt", "a");
+            strcat(cwd, "/");
+            fprintf(fpf, "%d              %s\n", hits, strcat(cwd,fname));
+            fclose(fpf);
+            return 0;
         }else{
             //Create the file
             fpf = fopen("report.ctt", "w+");
