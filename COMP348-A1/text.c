@@ -5,7 +5,7 @@
 
 int SrchAndReplace(char *fname, const char *argv)
 {
-    // Count(fname, argv);
+    Count(fname, argv);
     char *string;
     char frep[FILENAME_MAX];
     strcpy(frep, fname); // stores fname in frep[], clears stdin
@@ -67,10 +67,7 @@ int SrchAndReplace(char *fname, const char *argv)
             else
             {
                 remove(frep);
-                if (rename("Temp.txt", frep) == 0)
-                    printf("\nSuccess.\nReplaced any instances of \"%s\" with \"%s\".\n", target, replace);
-                else
-                {
+                if (rename("Temp.txt", frep) != 0){
                     remove("Temp.txt");
                     perror("\nFailed ");
                 }
@@ -82,7 +79,6 @@ int SrchAndReplace(char *fname, const char *argv)
 
 int Count(char *fname, const char *str){
     FILE *fp;
-    int line_num = 1;
     int hits = 0;
     int length = strlen(str);
     char buffer[length+1];
@@ -95,14 +91,13 @@ int Count(char *fname, const char *str){
     {
         if ((strstr(buffer, str)) != NULL)
         {
-            printf("There's a match on line: %d\n", line_num);
             printf("%s\n", buffer);
             hits++;
         }
-        line_num++;
     }
 
-    //if (hits != 0)
+    if (hits != 0)
+        printf("Updated %d", hits);
     
     fclose(fp);
     fp = NULL;

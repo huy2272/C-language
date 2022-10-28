@@ -56,7 +56,6 @@ int Traverse(const char *argv)
       printf("Filename: %s  path:%s\n", dir->d_name, currentPath);
       //Ensure that we are updating .txt files ONLY
       if (has_txt(dir->d_name)){
-        Count(dir->d_name, argv);
         SrchAndReplace(dir->d_name, argv);
       }
         
@@ -97,7 +96,6 @@ void helper(DIR *dp, struct dirent *dir, struct stat buffer,
         printf("    ");
       printf("Filename: %s  path:%s\n", dir->d_name, currentPath);
       if (has_txt(dir->d_name)){
-        Count(dir->d_name, argv);
         SrchAndReplace(dir->d_name, argv);
       }
         
