@@ -53,7 +53,7 @@ int Traverse(char *argv)
     // If it is call the SrchAndReplace()
     if (S_ISREG(buffer.st_mode))
     {
-      printf("%s\n", dir->d_name);
+      printf("Filename: %s  path:%s\n", dir->d_name, currentPath);
       //Ensure that we are updating .txt files ONLY
       if (has_txt != 0)
         SrchAndReplace(dir->d_name, argv);
@@ -92,7 +92,7 @@ void helper(DIR *dp, struct dirent *dir, struct stat buffer,
     {
       for (i = 0; i < depth; i++)
         printf("    ");
-      printf("%s/%s\n", currentPath, dir->d_name);
+      printf("Filename: %s  path:%s\n", dir->d_name, currentPath);
       if (has_txt != 0)
         SrchAndReplace(dir->d_name, argv);
     }
