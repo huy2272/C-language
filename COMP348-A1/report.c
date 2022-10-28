@@ -7,6 +7,11 @@ int Report(int hits, char *fname, const char *str){
     FILE *fp = NULL;
     char cwd[PATH_MAX];
     getcwd(cwd, sizeof(cwd));
+    if (hits == 0)
+    {
+        return 0;
+    }
+    
     if (access("report.ctt", F_OK) == 0)
     {
         //The report file already exist
