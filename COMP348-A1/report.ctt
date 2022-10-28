@@ -1,5 +1,20 @@
-Target string: huy
+Target string: is
 Search begins in current folder: /home/huy/C-language/COMP348-A1
 ** Search Report **
 Updates         File Name
-1              /home/huy/C-language/COMP348-A1
+0              /home/huy/C-language/COMP348-A1/apple copy.txt
+Target string: is
+Search begins in current folder: /home/huy/C-language/COMP348-A1
+** Search Report **
+Updates         File Name
+0              /home/huy/C-language/COMP348-A1/apple.txt
+Target string: bob
+Search begins in current folder: /home/huy/C-language/COMP348-A1
+** Search Report **
+Updates         File Name
+0              /home/huy/C-language/COMP348-A1/apple copy.txt
+Target string: bob
+Search begins in current folder: /home/huy/C-language/COMP348-A1
+** Search Report **
+Updates         File Name
+0              /home/huy/C-language/COMP348-A1/apple.txt

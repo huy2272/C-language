@@ -102,13 +102,11 @@ int Count(char *fname, const char *str){
         line_num++;
     }
 
-    if (hits == 0)
-        printf("No matches found in this file\n");
-    else
-        Report(hits, fname, str);
-
+    //if (hits != 0)
+    
     fclose(fp);
     fp = NULL;
+    Report(hits, fname, str);
     
     return 0;
 }
