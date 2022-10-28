@@ -7,13 +7,13 @@
 #include <errno.h>
 #include <string.h>
 #include <stdbool.h>
+#include "methods.h"
 
-int SrchAndReplace(char *fname, char *argv);
 bool has_txt(char const *ext);
-void helper(DIR *, struct dirent *, struct stat, char *, int, char* argv);
-void dircheck(DIR *, struct dirent *, struct stat, char *, int, char* argv);
+void helper(DIR *, struct dirent *, struct stat, char *, int, const char* argv);
+void dircheck(DIR *, struct dirent *, struct stat, char *, int, const char* argv);
 
-int Traverse(char *argv)
+int Traverse(const char *argv)
 {
   DIR *dp;
   struct dirent *dir;
@@ -55,8 +55,11 @@ int Traverse(char *argv)
     {
       printf("Filename: %s  path:%s\n", dir->d_name, currentPath);
       //Ensure that we are updating .txt files ONLY
-      if (has_txt(dir->d_name))
+      if (has_txt(dir->d_name)){
+        Count(dir->d_name, argv);
         SrchAndReplace(dir->d_name, argv);
+      }
+        
       
     }
 
@@ -70,7 +73,7 @@ int Traverse(char *argv)
 
 /*Recursively called helper function*/
 void helper(DIR *dp, struct dirent *dir, struct stat buffer,
-            char currentPath[FILENAME_MAX], int depth, char* argv)
+            char currentPath[FILENAME_MAX], int depth, const char* argv)
 {
   int i = 0;
 
@@ -93,8 +96,11 @@ void helper(DIR *dp, struct dirent *dir, struct stat buffer,
       for (i = 0; i < depth; i++)
         printf("    ");
       printf("Filename: %s  path:%s\n", dir->d_name, currentPath);
-      if (has_txt(dir->d_name))
+      if (has_txt(dir->d_name)){
+        Count(dir->d_name, argv);
         SrchAndReplace(dir->d_name, argv);
+      }
+        
     }
 
     if (S_ISDIR(buffer.st_mode))
@@ -107,7 +113,7 @@ void helper(DIR *dp, struct dirent *dir, struct stat buffer,
 }
 
 void dircheck(DIR *dp, struct dirent *dir, struct stat buffer,
-              char currentPath[FILENAME_MAX], int depth, char* argv)
+              char currentPath[FILENAME_MAX], int depth, const char* argv)
 {
   int i = 0;
   strcat(currentPath, "/");
@@ -122,6 +128,7 @@ void dircheck(DIR *dp, struct dirent *dir, struct stat buffer,
   helper(dp, dir, buffer, currentPath, depth, argv);
 }
 
+//Make sure the file is a .txt file
 bool has_txt(char const *fname){
   int length = strlen(fname);
   return (length > 4) && (length > 4 && strcmp(fname + length - 4, ".txt") == 0);
