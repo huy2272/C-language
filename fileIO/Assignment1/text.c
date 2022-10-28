@@ -3,11 +3,11 @@
 #include <stdlib.h>
 #include "methods.h"
 
-int SrchAndReplace(int argc, char *argv[])
+int SrchAndReplace(char *fname, char *argv)
 {
     char *string;
     char frep[FILENAME_MAX];
-    strcpy(frep, argv[1]); // stores fname in frep[], clears stdin
+    strcpy(frep, fname); // stores fname in frep[], clears stdin
     FILE *rep = fopen(frep, "r");
     FILE *tmp = fopen("Temp.txt", "w"); // opens file for reading and tmp for writing
     if (rep == NULL || tmp == NULL)
@@ -17,11 +17,11 @@ int SrchAndReplace(int argc, char *argv[])
     else
     {
         char target[FILENAME_MAX];
-        strcpy(target, argv[2]);
+        strcpy(target, argv);
 
-        int length = strlen(argv[2]);
+        int length = strlen(argv);
         string = malloc(length + 1);
-        strcpy(string, argv[2]);
+        strcpy(string, argv);
         // Capitalize the user input string
         for (int i = 0; string[i] != '\0'; i++)
         {
@@ -79,42 +79,42 @@ int SrchAndReplace(int argc, char *argv[])
     return 0;
 }
 
-int Srch(char *fname, char *str){
-    FILE *fp, *fp1;
-    int line_num = 1;
-    int hits = 0;
-    char buffer[513];
-    char ch;
+// int Srch(char *fname, char *str){
+//     FILE *fp, *fp1;
+//     int line_num = 1;
+//     int hits = 0;
+//     char buffer[513];
+//     char ch;
 
 
-    fp = fopen(fname,"r");
-    if (fp == NULL)
-        return -1;
+//     fp = fopen(fname,"r");
+//     if (fp == NULL)
+//         return -1;
     
-    while ((fgets(buffer, 512, fp)) != NULL)
-    {
-        ch = fgetc(fp);
-        if ((strstr(buffer, str)) != NULL)
-        {
-            ch = ch - 32;
-            printf("There's a match on line: %d\n", line_num);
-            printf("%s\n", buffer);
-            hits++;
-        }
-        fputc(ch, fp1);
-        line_num++;   
-    }
+//     while ((fgets(buffer, 512, fp)) != NULL)
+//     {
+//         ch = fgetc(fp);
+//         if ((strstr(buffer, str)) != NULL)
+//         {
+//             ch = ch - 32;
+//             printf("There's a match on line: %d\n", line_num);
+//             printf("%s\n", buffer);
+//             hits++;
+//         }
+//         fputc(ch, fp1);
+//         line_num++;   
+//     }
 
-    if (hits == 0)
-        printf("No matches found in this file\n");
-    else
-        printf("Number of hits: %d\n", hits);
+//     if (hits == 0)
+//         printf("No matches found in this file\n");
+//     else
+//         printf("Number of hits: %d\n", hits);
         
-    fclose(fp);
-    fclose(fp1);
-    fp = NULL;
-    fp1 = NULL;
-    // Report(hits, fname, str);
+//     fclose(fp);
+//     fclose(fp1);
+//     fp = NULL;
+//     fp1 = NULL;
+//     // Report(hits, fname, str);
     
-    return 0;
-}
+//     return 0;
+// }

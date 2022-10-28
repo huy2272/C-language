@@ -6,16 +6,20 @@
 #include <unistd.h>
 #include <errno.h>
 #include <string.h>
+#include <stdbool.h>
 
-void helper(DIR *, struct dirent *, struct stat, char *, int);
-void dircheck(DIR *, struct dirent *, struct stat, char *, int);
+int SrchAndReplace(char *fname, char *argv);
+bool has_txt(char const *ext);
+void helper(DIR *, struct dirent *, struct stat, char *, int, char* argv);
+void dircheck(DIR *, struct dirent *, struct stat, char *, int, char* argv);
 
-int Traverse(){
+int Traverse(char *argv)
+{
   DIR *dp;
   struct dirent *dir;
   struct stat buffer;
   char currentPath[FILENAME_MAX] = ".";
-  int depth = 0; //Keeps track of how many subdirectories we have entered
+  int depth = 0; // Keeps track of how many subdirectories we have entered
 
   /*Open Current Directory*/
   if ((dp = opendir(".")) == NULL)
@@ -46,12 +50,19 @@ int Traverse(){
     getcwd(currentPath, FILENAME_MAX);
 
     // Checks if current item is a file
+    // If it is call the SrchAndReplace()
     if (S_ISREG(buffer.st_mode))
+    {
       printf("%s\n", dir->d_name);
+      //Ensure that we are updating .txt files ONLY
+      if (has_txt != 0)
+        SrchAndReplace(dir->d_name, argv);
+      
+    }
 
     // Checks if current item is a directory
     if (S_ISDIR(buffer.st_mode))
-      dircheck(dp, dir, buffer, currentPath, depth);
+      dircheck(dp, dir, buffer, currentPath, depth, argv);
   }
   closedir(dp);
   return 0;
@@ -59,7 +70,7 @@ int Traverse(){
 
 /*Recursively called helper function*/
 void helper(DIR *dp, struct dirent *dir, struct stat buffer,
-            char currentPath[FILENAME_MAX], int depth)
+            char currentPath[FILENAME_MAX], int depth, char* argv)
 {
   int i = 0;
 
@@ -82,19 +93,21 @@ void helper(DIR *dp, struct dirent *dir, struct stat buffer,
       for (i = 0; i < depth; i++)
         printf("    ");
       printf("%s/%s\n", currentPath, dir->d_name);
+      if (has_txt != 0)
+        SrchAndReplace(dir->d_name, argv);
     }
 
     if (S_ISDIR(buffer.st_mode))
-      dircheck(dp, dir, buffer, currentPath, depth);
+      dircheck(dp, dir, buffer, currentPath, depth, argv);
   }
-  
-  //Cleanup
+
+  // Cleanup
   chdir("..");
   closedir(dp);
 }
 
 void dircheck(DIR *dp, struct dirent *dir, struct stat buffer,
-              char currentPath[FILENAME_MAX], int depth)
+              char currentPath[FILENAME_MAX], int depth, char* argv)
 {
   int i = 0;
   strcat(currentPath, "/");
@@ -105,6 +118,11 @@ void dircheck(DIR *dp, struct dirent *dir, struct stat buffer,
   printf("%s (subdirectory)\n", dir->d_name);
   chdir(currentPath);
   depth++;
-  //Call this function again recursively until there are no more subdirectory
-  helper(dp, dir, buffer, currentPath, depth);
+  // Call this function again recursively until there are no more subdirectory
+  helper(dp, dir, buffer, currentPath, depth, argv);
+}
+
+bool has_txt(char const *fname){
+  size_t length = strlen(fname);
+  return length > 4 && strcmp(fname + length - 4, ".txt") == 0;
 }
