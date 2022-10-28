@@ -5,6 +5,7 @@
 
 int SrchAndReplace(char *fname, const char *argv)
 {
+    // Count(fname, argv);
     char *string;
     char frep[FILENAME_MAX];
     strcpy(frep, fname); // stores fname in frep[], clears stdin
@@ -62,7 +63,7 @@ int SrchAndReplace(char *fname, const char *argv)
         else
         {
             if (rename("Temp.txt", frep) == 0)
-                printf("\nSuccess!\nReplaced instances of \"%s\" with \"%s\".\n", target, replace);
+                printf("%s was checked.\n", fname);
             else
             {
                 remove(frep);
@@ -83,19 +84,17 @@ int Count(char *fname, const char *str){
     FILE *fp;
     int line_num = 1;
     int hits = 0;
-    char buffer[513];
-    char ch;
+    int length = strlen(str);
+    char buffer[length+1];
 
     fp = fopen(fname, "r");
     if (fp == NULL)
         return -1;
 
-    while ((fgets(buffer, 512, fp)) != NULL)
+    while ((fgets(buffer, length, fp)) != NULL)
     {
-        ch = fgetc(fp);
         if ((strstr(buffer, str)) != NULL)
         {
-            ch = ch - 32;
             printf("There's a match on line: %d\n", line_num);
             printf("%s\n", buffer);
             hits++;
@@ -106,10 +105,10 @@ int Count(char *fname, const char *str){
     if (hits == 0)
         printf("No matches found in this file\n");
     else
-        printf("Number of hits: %d\n", hits);
+        Report(hits, fname, str);
 
     fclose(fp);
     fp = NULL;
-    Report(hits, fname, str);
+    
     return 0;
 }
